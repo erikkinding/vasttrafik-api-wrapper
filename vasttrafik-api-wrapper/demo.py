@@ -24,6 +24,31 @@ def demo_vehicle_positions(client):
 	headers = ['Name', 'Lat', 'Lon', 'Delay (minutes)']
 	print(tabulate(table, headers=headers))
 
+def demo_vehicle_positions_specific(client, vehicleName):
+	vehiclePositions = client.get_livemap(12.246026, 57.831061, 11.544078, 57.533878)
+	print('\n### Current '+ vehicleName +' vehicle positions')
+	table = []
+	for pos in vehiclePositions:
+		if vehicleName not in pos['name']:
+			continue
+		row = []
+		row.append(pos['name'])
+		row.append(pos['y'])
+		row.append(pos['x'])
+
+		delay = 0
+		if 'delay' in pos.keys():
+			delay = pos['delay']
+		row.append(delay)
+		table.append(row)
+
+	headers = ['Name', 'Lat', 'Lon', 'Delay (minutes)']
+	print(tabulate(table, headers=headers))
+
+def demo_get_systeminfo(client):
+	systeminfo = client.get_systeminfo()
+	print(systeminfo)
+
 def demo_get_stops_by_name(client):
 	stops = client.get_stops_by_name(stop_name)
 	print('\n### Search results for "'+stop_name+'" ###')
@@ -99,6 +124,8 @@ client = Client(format='JSON')
 print('\n### API Wrapper DEMO ###')
 #demo_get_all_stops(client)
 #demo_vehicle_positions(client)
+demo_vehicle_positions_specific(client, 'Bus 19')
 #demo_get_departures(client)
-demo_get_arrivals(client)
+#demo_get_arrivals(client)
 #demo_get_stops_by_name(client)
+#demo_get_systeminfo(client)

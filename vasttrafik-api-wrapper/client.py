@@ -77,6 +77,11 @@ class Client:
 	def calculate_trip(self, query_params=None):
 		return ''
 
+	## /systeminfo endpoint
+	def get_systeminfo(self, query_params=None):
+		return self.get('/systeminfo', query_params)
+
+
 	## /livemap endpoint
 	def get_livemap(self, longitudeMax, latitudeMax, longitudeMin, latitudeMin, onlyRealtime='yes', query_params=None):
 		if longitudeMax is None or latitudeMax is None or longitudeMin is None or latitudeMin is None:
